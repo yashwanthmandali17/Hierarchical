@@ -19,7 +19,7 @@ st.set_page_config(
 @st.cache_resource
 def load_model_and_scaler():
     try:
-        model = joblib.load("hierarchical_model.pkl")
+        model = joblib.load("customer_segmentation_model.pkl")
         scaler = joblib.load("scaler.pkl")
         return model, scaler
     except FileNotFoundError:
@@ -96,7 +96,7 @@ if st.button("Predict Cluster"):
     })
 
     input_scaled = scaler.transform(input_df)
-    cluster = model.predict(input_scaled)[0]
+    cluster = int(model.predict(input_scaled)[0])
 
     st.success(f"### Predicted Cluster: {cluster}")
     st.info(f"**Customer Type:** {CLUSTER_INFO[cluster]}")
